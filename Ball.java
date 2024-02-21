@@ -1,4 +1,8 @@
 import java.awt.*;
+import java.io.File;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 
 public class Ball extends Rectangle {
 
@@ -9,6 +13,7 @@ public class Ball extends Rectangle {
     double ySpeed;
     int defaultX;
     int defaultY;
+    FilePlayer audio;
 
 
     public Ball(int x, int y){
@@ -22,6 +27,7 @@ public class Ball extends Rectangle {
         defaultY = y;
         
         speedFinder();
+        audio = new FilePlayer();
     }
 
     public void ballTick(){
@@ -38,6 +44,7 @@ public class Ball extends Rectangle {
             super.y = defaultY;
             ballSpeed = 10;
             speedFinder();
+            audio.play("./tada.wav");
         }
     }
 
@@ -45,6 +52,8 @@ public class Ball extends Rectangle {
 
         ballAngle = 2*Math.PI - ballAngle;
         speedFinder();
+
+        audio.play("./beep.wav");
 
     }
 
@@ -61,6 +70,9 @@ public class Ball extends Rectangle {
         double measuredHeight = paddleHeight+30;
 
         double angleFinder = Math.abs(ballpos - paddlepos)/measuredHeight;
+        if(angleFinder < 0.20){angleFinder = 0.20;}
+        else if(angleFinder > 0.8){angleFinder = 0.8;}
+
         angleFinder = Math.PI * angleFinder;
         if(ballAngle <= 3*Math.PI/2 && ballAngle >= Math.PI/2){
             angleFinder = angleFinder + 3*Math.PI/2;
@@ -68,12 +80,15 @@ public class Ball extends Rectangle {
                 angleFinder = angleFinder - 2*Math.PI;
             }
             ballAngle = angleFinder;
+            super.x += 2;
         }else{
             angleFinder = 3*Math.PI/2 - angleFinder;
             ballAngle = angleFinder;
+            super.x -= 2;
         }
         ballSpeed = 10 + Math.abs(paddleSpeed)/2;
         speedFinder();
+        audio.play("./beep.wav");
     }
     
 }

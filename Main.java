@@ -1,6 +1,4 @@
 import java.awt.Dimension;
-import java.awt.event.KeyAdapter;
-
 import javax.swing.*;
 
 public class Main {
