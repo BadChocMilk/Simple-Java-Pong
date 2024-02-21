@@ -1,8 +1,6 @@
 import java.awt.*;
-import java.io.File;
+import java.net.URL;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 
 public class Ball extends Rectangle {
 
@@ -14,6 +12,7 @@ public class Ball extends Rectangle {
     int defaultX;
     int defaultY;
     FilePlayer audio;
+    URL beepSound, tadaSound;
 
 
     public Ball(int x, int y){
@@ -28,6 +27,8 @@ public class Ball extends Rectangle {
         
         speedFinder();
         audio = new FilePlayer();
+        beepSound = getClass().getResource("beep.wav");
+        tadaSound = getClass().getResource("tada.wav");
     }
 
     public void ballTick(){
@@ -44,7 +45,7 @@ public class Ball extends Rectangle {
             super.y = defaultY;
             ballSpeed = 10;
             speedFinder();
-            audio.play("./tada.wav");
+            audio.play(tadaSound);
         }
     }
 
@@ -53,7 +54,7 @@ public class Ball extends Rectangle {
         ballAngle = 2*Math.PI - ballAngle;
         speedFinder();
 
-        audio.play("./beep.wav");
+        audio.play(beepSound);
 
     }
 
@@ -88,7 +89,7 @@ public class Ball extends Rectangle {
         }
         ballSpeed = 10 + Math.abs(paddleSpeed)/2;
         speedFinder();
-        audio.play("./beep.wav");
+        audio.play(beepSound);
     }
     
 }
