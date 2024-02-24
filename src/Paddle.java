@@ -4,10 +4,12 @@ public class Paddle extends Rectangle {
 
     double speed;
     double acceleration;
-    static final double MAXSPEED = 10;
     int levelHeight;
     boolean movingUp = false;
     boolean movingDown = false;
+
+    // maxspeed ensures that the paddles won't go too fast.
+    static final double MAXSPEED = 10;
 
     public Paddle(int x, int y, int height){
         super.width = 15;
@@ -33,11 +35,11 @@ public class Paddle extends Rectangle {
         }
     }
 
-    public void paddleDirection(String direction){
-        if(direction == "Up"){
+    public void paddleDirection(String key){
+        if(key == "Up"){
             movingUp = true;
         }
-        else if(direction == "Down"){
+        else if(key == "Down"){
             movingDown = true;
         }
     }
@@ -70,6 +72,8 @@ public class Paddle extends Rectangle {
     }
 
     public void wallCollision(){
+
+        // the numbers are one pixel off because it will snap back to place. the walls are 20 pixels
         if(super.y >= levelHeight-119){
             acceleration = 0;
             speed = 0;

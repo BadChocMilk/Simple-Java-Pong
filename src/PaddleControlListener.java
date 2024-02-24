@@ -14,6 +14,9 @@ public class PaddleControlListener extends KeyAdapter{
         int keyCode = e.getKeyCode();
         String key = KeyEvent.getKeyText(keyCode);
 
+        // handles the arrow keys on MacOS
+        key = macArrowKeys(key);
+
         switch (key){
             case "Up":
                 gc.rightPaddle.paddleDirection("Up");
@@ -36,6 +39,9 @@ public class PaddleControlListener extends KeyAdapter{
         int keyCode = e.getKeyCode();
         String key = KeyEvent.getKeyText(keyCode);
 
+        // handles the arrow keys on MacOS
+        key = macArrowKeys(key);
+
         switch (key){
             case "Up":
                 gc.rightPaddle.paddleStop("Up");
@@ -50,5 +56,18 @@ public class PaddleControlListener extends KeyAdapter{
                 gc.leftPaddle.paddleStop("Down");
                 break;
         }
+    }
+    
+    public String macArrowKeys(String key){
+        // apparently mac's arrow keys are handled differently. This corrects that. 
+        if(key.equals("↑")){
+            return "Up";
+        }
+        else if(key.equals("↓")){
+            return "Down";
+        }
+        else{
+            return key;
+        }      
     }
 }
