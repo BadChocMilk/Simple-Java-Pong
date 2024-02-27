@@ -12,10 +12,12 @@ public class Main {
 
         GameCanvas gameCanvas = new GameCanvas();
         mainWindow.add(gameCanvas);
+        Menus menu = new Menus(mainWindow, gameCanvas);
+        mainWindow.setJMenuBar(menu);
         mainWindow.setVisible(true);
 
 
 
-        gameCanvas.start();
+        
     }
 }

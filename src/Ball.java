@@ -11,15 +11,17 @@ public class Ball extends Rectangle {
     double ySpeed;
     int defaultX;
     int defaultY;
+    Scoreboard score;
     FilePlayer audio;
     URL beepSound, tadaSound;
 
 
-    public Ball(int x, int y){
+    public Ball(int x, int y, Scoreboard score){
         super.width = 20;
         super.height = 20;
         super.x = x;
         super.y = y;
+        this.score = score;
         ballAngle = 0;
         defaultBallSpeed = 10;
         ballSpeed = defaultBallSpeed;
@@ -48,10 +50,10 @@ public class Ball extends Rectangle {
     public void ballRespawn(){
         // respawns the ball back to its original position and adds a score to the counter. 
         if(super.x <=0 || super.x >= ((defaultX+10)*2)-20){
-            ballAngle = 0;
+            ballAngle = score.scored(this);
             super.x = defaultX;
             super.y = defaultY;
-            ballSpeed = 10;
+            ballSpeed = defaultBallSpeed;
             speedFinder();
             audio.play(tadaSound);
         }
@@ -60,7 +62,6 @@ public class Ball extends Rectangle {
     public void wallCollision(){
         // called whenever a collision with the top and bottom walls occur
         ballAngle = 2*Math.PI - ballAngle;
-        System.out.println(ballAngle);
 
         // shifts the ball depending on if it hit the top or bottom wall
         if(ballAngle <= Math.PI){
@@ -125,6 +126,18 @@ public class Ball extends Rectangle {
         ballSpeed = defaultBallSpeed + Math.abs(paddleSpeed)/2;
         speedFinder();
         audio.play(beepSound);
+    }
+
+    public void stopBall(){
+        this.ballSpeed = 0;
+        speedFinder();
+        super.y = 1000000;
+    }
+
+    public void setSpeed(double speed){
+        this.defaultBallSpeed = speed;
+        this.ballSpeed = speed;
+        speedFinder();
     }
     
 }
