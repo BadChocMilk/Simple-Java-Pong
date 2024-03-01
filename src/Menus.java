@@ -19,7 +19,7 @@ public class Menus extends JMenuBar{
     private void createMenuItems(){
 
         JMenu gameMenu = new JMenu("Game");
-        JMenu ballSpeed = new JMenu("BallSpeed");
+        JMenu ballSpeed = new JMenu("Ball Speed");
 
         JMenuItem start = new JMenuItem("Start");
         JMenuItem restart = new JMenuItem("Restart");
@@ -54,19 +54,19 @@ public class Menus extends JMenuBar{
 
         slow.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                gameCanvas.setBallSpeed(5);
+                gameCanvas.setBallSpeed(Ball.SLOW);
             }
         });
 
         normal.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                gameCanvas.setBallSpeed(10);
+                gameCanvas.setBallSpeed(Ball.NORMAL);
             }
         });
 
         fast.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                gameCanvas.setBallSpeed(20);
+                gameCanvas.setBallSpeed(Ball.FAST);
             }
         });
 

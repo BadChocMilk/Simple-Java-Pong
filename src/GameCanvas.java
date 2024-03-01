@@ -8,6 +8,7 @@ public class GameCanvas extends Canvas implements Runnable {
     private Wall topWall;
     private Wall bottomWall;
     private Ball gameBall;
+    private PowerUp powerUpBall;
     public Paddle leftPaddle;
     public Paddle rightPaddle;
     private Scoreboard score;

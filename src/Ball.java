@@ -15,6 +15,9 @@ public class Ball extends Rectangle {
     FilePlayer audio;
     URL beepSound, tadaSound;
 
+    public static final int SLOW = 5;
+    public static final int NORMAL = 10;
+    public static final int FAST = 20;
 
     public Ball(int x, int y, Scoreboard score){
         super.width = 20;
@@ -123,7 +126,8 @@ public class Ball extends Rectangle {
         }
 
         // this line adjusts the speed of the ball based on the speed of the paddle. This gives the game a bit more depth. 
-        ballSpeed = defaultBallSpeed + Math.abs(paddleSpeed)/2;
+        ballSpeed = defaultBallSpeed + Math.abs(paddleSpeed);
+        System.out.println(ballSpeed);
         speedFinder();
         audio.play(beepSound);
     }
