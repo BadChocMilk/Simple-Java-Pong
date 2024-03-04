@@ -1,14 +1,19 @@
+import java.net.URL;
+
 public class PowerUp extends Ball{
 
     private boolean enabled = false;
     private boolean blueBall;
-    
+    URL powerupSound, powerdownSound;
+
 
 
     public PowerUp(int x, int y){      
         super(x, y, null);
         super.ballSpeed = 0;
         speedFinder();
+        powerupSound = getClass().getResource("powerup.wav");
+        powerdownSound = getClass().getResource("powerdown.wav");
   
     }
 
@@ -49,9 +54,11 @@ public class PowerUp extends Ball{
     public void paddleCollision(Paddle paddle){
         if(blueBall){
             paddle.increaseSize();
+            audio.play(powerupSound);
         }
         else{
             paddle.decreaseSize();
+            audio.play(powerdownSound);
         }
 
         super.x = 10000;

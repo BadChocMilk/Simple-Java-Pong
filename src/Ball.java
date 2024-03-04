@@ -13,7 +13,7 @@ public class Ball extends Rectangle {
     int defaultY;
     Scoreboard score;
     FilePlayer audio;
-    URL beepSound, tadaSound;
+    URL beepSound, tadaSound, clappingSound;
 
     public static final int SLOW = 5;
     public static final int NORMAL = 10;
@@ -37,6 +37,7 @@ public class Ball extends Rectangle {
         audio = new FilePlayer();
         beepSound = getClass().getResource("beep.wav");
         tadaSound = getClass().getResource("tada.wav");
+        clappingSound = getClass().getResource("clapping.wav");
     }
 
     public void setDefaultBallSpeed(double defaultBallSpeed) {
@@ -135,6 +136,7 @@ public class Ball extends Rectangle {
         this.ballSpeed = 0;
         speedFinder();
         super.y = 1000000;
+        audio.play(clappingSound);
     }
 
     public void setSpeed(double speed){
