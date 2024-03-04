@@ -10,6 +10,8 @@ public class Paddle extends Rectangle {
 
     // maxspeed ensures that the paddles won't go too fast.
     static final double MAXSPEED = 10;
+    static final int MINHEIGHT = 50;
+    static final int MAXHEIGHT = 200;
 
     public Paddle(int x, int y, int height){
         super.width = 15;
@@ -74,15 +76,27 @@ public class Paddle extends Rectangle {
     public void wallCollision(){
 
         // the numbers are one pixel off because it will snap back to place. the walls are 20 pixels
-        if(super.y >= levelHeight-119){
+        if(super.y >= levelHeight-(super.height+19)){
             acceleration = 0;
             speed = 0;
-            super.y = levelHeight -120;
+            super.y = levelHeight -(super.height + 20);
         }
         if(super.y <= 19){
             acceleration = 0;
             speed = 0;
             super.y = 20;
+        }
+    }
+
+    public void increaseSize(){
+        if(super.height < MAXHEIGHT){
+            super.height += 25;
+        }
+    }
+
+    public void decreaseSize(){
+        if(super.height > MINHEIGHT){
+            super.height -= 25;
         }
     }
 

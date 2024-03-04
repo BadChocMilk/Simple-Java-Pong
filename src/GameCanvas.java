@@ -8,7 +8,7 @@ public class GameCanvas extends Canvas implements Runnable {
     private Wall topWall;
     private Wall bottomWall;
     private Ball gameBall;
-    private PowerUp powerUpBall;
+    private PowerUp powerUpBall1, powerUpBall2;
     public Paddle leftPaddle;
     public Paddle rightPaddle;
     private Scoreboard score;
@@ -65,6 +65,8 @@ public class GameCanvas extends Canvas implements Runnable {
         rightPaddle.paddleTick();
         leftPaddle.paddleTick();
         gameBall.setSpeed(totalBallSpeed);
+        powerUpBall1.ballTick();
+        powerUpBall2.ballTick();
 
     }
 
@@ -86,6 +88,29 @@ public class GameCanvas extends Canvas implements Runnable {
         g2d.drawString(Integer.toString(score.getPlayer2Score()), (this.getWidth()/2)+50, 100);
         g2d.drawString(score.getWinmessage(), this.getWidth()/2-153, this.getHeight()/2);
 
+        if(powerUpBall1.exists()){
+            if(powerUpBall1.isBlue()){
+                g2d.setColor(Color.BLUE);
+                g2d.fill(powerUpBall1);
+
+            }
+            else{
+                g2d.setColor(Color.RED);
+                g2d.fill(powerUpBall1);
+            }
+        }
+        if(powerUpBall2.exists()){
+            if(powerUpBall2.isBlue()){
+                g2d.setColor(Color.BLUE);
+                g2d.fill(powerUpBall2);
+
+            }
+            else{
+                g2d.setColor(Color.RED);
+                g2d.fill(powerUpBall2);
+            }
+        }
+
         g2d.dispose();
         bufferStrategy.show();
 
@@ -96,6 +121,8 @@ public class GameCanvas extends Canvas implements Runnable {
         score = new Scoreboard();
 
         gameBall = new Ball((this.getWidth()/2)-10, (this.getHeight()/2)-10, score);
+        powerUpBall1 = new PowerUp((this.getWidth()/2)-10, (this.getHeight()/2)-10);
+        powerUpBall2 = new PowerUp((this.getWidth()/2)-10, (this.getHeight()/2)-10);
         topWall = new Wall(this.getWidth(), 0);
         bottomWall = new Wall(this.getWidth(), this.getHeight()-20);
         rightPaddle = new Paddle(this.getWidth()-40, this.getHeight()/2-50, this.getHeight());
@@ -109,16 +136,40 @@ public class GameCanvas extends Canvas implements Runnable {
             gameBall.wallCollision();
             gameBall.ballTick();
         }
+        if(powerUpBall1.intersects(bottomWall) || powerUpBall1.intersects(topWall)){
+            powerUpBall1.wallCollision();
+            powerUpBall1.ballTick();
+        }
+        if(powerUpBall2.intersects(bottomWall) || powerUpBall2.intersects(topWall)){
+            powerUpBall2.wallCollision();
+            powerUpBall2.ballTick();
+        }
+        
     }
 
     private void paddleIntersection(){
         if(gameBall.intersects(rightPaddle)){
             gameBall.paddleCollision(rightPaddle.getY(), rightPaddle.getHeight(), rightPaddle.speed);
             gameBall.ballTick();
+            this.powerUpSpawner();
         }
         if(gameBall.intersects(leftPaddle)){
             gameBall.paddleCollision(leftPaddle.getY(), leftPaddle.getHeight(), rightPaddle.speed);
             gameBall.ballTick();
+            this.powerUpSpawner();
+        }
+
+        if(powerUpBall1.intersects(leftPaddle)){
+            powerUpBall1.paddleCollision(leftPaddle);
+        }
+        if(powerUpBall1.intersects(rightPaddle)){
+            powerUpBall1.paddleCollision(rightPaddle);
+        }
+        if(powerUpBall2.intersects(rightPaddle)){
+            powerUpBall2.paddleCollision(rightPaddle);
+        }
+        if(powerUpBall2.intersects(leftPaddle)){
+            powerUpBall2.paddleCollision(leftPaddle);
         }
     }
 
@@ -135,5 +186,26 @@ public class GameCanvas extends Canvas implements Runnable {
 
     public boolean isRunning(){
         return running;
+    }
+
+    private void powerUpSpawner(){
+        if (Math.random() < 0.05 && !powerUpBall1.exists() && !powerUpBall2.exists()){
+
+            double angle = Math.random();
+            if(angle >= 0.45 && angle < 0.5){angle = 0.4;}
+            else if(angle <= 0.65 && angle >= 0.5){angle = 0.6;}
+            angle = angle * Math.PI;
+
+            powerUpBall1.setAngle(angle);
+            angle = angle + Math.PI;
+            powerUpBall2.setAngle(angle);
+
+            powerUpBall1.setDefaultBallSpeed(4 + Math.random() * 6);
+            powerUpBall2.setDefaultBallSpeed(4 + Math.random() * 6);
+
+
+            powerUpBall1.spawnPowerUp();
+            powerUpBall2.spawnPowerUp();
+        } 
     }
 }

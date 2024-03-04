@@ -29,11 +29,11 @@ public class Scoreboard {
 
         if(ballPos <= 0){
             player2Score++;
-            return Math.PI;
+            return 0;
         }
         else{
             player1Score++;
-            return 0;
+            return Math.PI;
         }
     }
 

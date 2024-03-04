@@ -127,7 +127,6 @@ public class Ball extends Rectangle {
 
         // this line adjusts the speed of the ball based on the speed of the paddle. This gives the game a bit more depth. 
         ballSpeed = defaultBallSpeed + Math.abs(paddleSpeed);
-        System.out.println(ballSpeed);
         speedFinder();
         audio.play(beepSound);
     }
@@ -142,6 +141,10 @@ public class Ball extends Rectangle {
         this.defaultBallSpeed = speed;
         this.ballSpeed = speed;
         speedFinder();
+    }
+
+    public void setAngle(double angle){
+        this.ballAngle = angle;
     }
     
 }
