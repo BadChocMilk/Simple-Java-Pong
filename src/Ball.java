@@ -11,6 +11,7 @@ public class Ball extends Rectangle {
     double ySpeed;
     int defaultX;
     int defaultY;
+    boolean gameWon = false;
     Scoreboard score;
     FilePlayer audio;
     URL beepSound, tadaSound, clappingSound;
@@ -136,7 +137,11 @@ public class Ball extends Rectangle {
         this.ballSpeed = 0;
         speedFinder();
         super.y = 1000000;
-        audio.play(clappingSound);
+
+        if(!gameWon){
+            gameWon = true;
+            audio.play(clappingSound);
+        }
     }
 
     public void setSpeed(double speed){
